@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1",
+    "photo": "/images/coffee.jpg",
+    "title": "coffee",
+    "price": 15,
+    "description": "fresh and energizing."
+  },
+  {
+    "id": "2",
+    "photo": "/images/ice-cream.jpg",
+    "price": 25,
+    "title": "ice cream",
+    "description": "cold and stimulating."
+  },
+  {
+    "id": "3",
+    "photo": "/images/pizza.jpg",
+    "price": 35,
+    "title": "pizza",
+    "description": "delicious and gorgeous."
+  }
+]
