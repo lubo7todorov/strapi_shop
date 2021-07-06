@@ -65,10 +65,7 @@ export default function Home() {
           </div>
           {/* FOOTER */}
           <div className="mt-10 bottom-0 text-center">
-            <h4 className="text-sm font-semibold text-gray-600 ">
-              {" "}
-              2021
-            </h4>
+            <h4 className="text-sm font-semibold text-gray-600 ">&copy; 2021</h4>
           </div>
         </div>
       </div>
