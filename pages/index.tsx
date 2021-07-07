@@ -1,3 +1,5 @@
+import { useState, useEffect, useCallback } from "react";
+
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
@@ -6,6 +8,89 @@ import products from "../db/products.json";
 import { initiateCheckout } from "../lib/payments";
 
 export default function Home() {
+  const [cart, setCart] = useState({
+    cartProducts: {},
+  });
+
+  const [total, setTotal] = useState(0);
+  const [numberOfItems, setNumberOfItems] = useState(0);
+
+  const updateCart = (priceId: string) => {
+    const foundProduct = products.filter(
+      (product) => product.priceId === priceId
+    )[0];
+    const { title } = foundProduct;
+
+    let orderedProducts = Object.keys(cart.cartProducts);
+    if (!orderedProducts.includes(title)) {
+      setCart((prevCart) => ({
+        ...prevCart,
+        cartProducts: {
+          ...prevCart.cartProducts,
+          [title]: { ...foundProduct, quantity: 1 },
+        },
+      }));
+    } else {
+      setCart((prevCart) => ({
+        ...prevCart,
+        cartProducts: {
+          ...prevCart.cartProducts,
+          [title]: {
+            ...foundProduct,
+            quantity: prevCart.cartProducts[title].quantity + 1,
+          },
+        },
+      }));
+    }
+  };
+
+  const getSubtotal = useCallback(() => {
+    const items = Object.keys(cart.cartProducts).map((title: string) => {
+      const product = cart.cartProducts[title];
+
+      return product;
+    });
+
+    let subtotal = items.reduce((acc, item) => {
+      acc = acc + item.quantity * item.price;
+      return acc;
+    }, 0);
+    setTotal(subtotal / 100);
+  }, [cart.cartProducts]);
+
+  const getTotalItems = useCallback(() => {
+    const items = Object.keys(cart.cartProducts).map((title: string) => {
+      const product = cart.cartProducts[title];
+
+      return product;
+    });
+
+    let totalItems = items.reduce((acc, item) => {
+      acc = acc + item.quantity;
+      return acc;
+    }, 0);
+    setNumberOfItems(totalItems);
+  }, [cart.cartProducts]);
+
+  const placeOrder = () => {
+    const lineItems = Object.keys(cart.cartProducts).map((title: string) => {
+      const product = cart.cartProducts[title];
+
+      return {
+        price: product.priceId,
+        quantity: product.quantity,
+      };
+    });
+
+    initiateCheckout({
+      lineItems,
+    });
+  };
+
+  useEffect(() => {
+    getSubtotal();
+    getTotalItems();
+  }, [cart, getSubtotal, getTotalItems]);
   return (
     <>
       <Head>
@@ -21,15 +106,27 @@ export default function Home() {
               The Shop
             </span>
           </h1>
-
+          <div className="text-center">
+            <div className='font-bold text-2xl'>Items: {numberOfItems}</div> 
+            <div className='font-bold text-2xl'>Total price: {total.toFixed(2)} USD</div> 
+          </div>
+          <div className="text-center">
+            <button
+              className=" mt-8 hover:bg-indigo-700 rounded-full py-2 px-4 font-semibold hover:text-white bg-indigo-500 text-gray-100 shadow-xl"
+              onClick={placeOrder}
+            >
+              Order Now
+            </button>
+          </div>
           {/* CARD CONTAINER */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 m-8">
             {products &&
               products.map((product) => {
-                const { id, price, imageUrl, description, title } = product;
+                const { priceId, price, imageUrl, description, title } =
+                  product;
                 return (
                   <div
-                    key={id}
+                    key={priceId}
                     className="shadow-md hover:shadow-lg hover:bg-gray-100 rounded-lg bg-white my-12  overflow-hidden relative transform transition duration-500 ease-in-out lg:hover:-translate-y-1.5 hover:scale-105"
                   >
                     {/* CARD IMAGE */}
@@ -47,20 +144,13 @@ export default function Home() {
                         {title}
                       </h3>
                       <p className="absolute right-4 top-2 font-bold text-white text-3xl">
-                        $ {price}
+                        $ {(price / 100).toFixed(2)}
                       </p>
                       <p className="text-justify capitalize">{description}</p>
                       <div className="mt-5">
                         <button
                           onClick={() => {
-                            initiateCheckout({
-                              lineItems: [
-                                {
-                                  price: id,
-                                  quantity: 1,
-                                },
-                              ],
-                            });
+                            updateCart(priceId);
                           }}
                           className="hover:bg-indigo-700 rounded-full py-2 px-4 font-semibold hover:text-white bg-indigo-500 text-gray-100 shadow-xl"
                         >
@@ -72,6 +162,7 @@ export default function Home() {
                 );
               })}
           </div>
+
           {/* FOOTER */}
           <div className="mt-10 bottom-0 text-center">
             <h4 className="text-sm font-semibold text-gray-600 ">

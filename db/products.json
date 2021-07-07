@@ -1,22 +1,22 @@
 [
   {
-    "id": "price_1JAevkE5koURF23xpXjtSJ3t",
+    "priceId": "price_1JAevkE5koURF23xpXjtSJ3t",
     "imageUrl": "/images/coffee.jpg",
     "title": "Coffee Dream",
-    "price": 15.25,
+    "price": 1525,
     "description": "Fresh and energizing."
   },
   {
-    "id": "price_1JAex8E5koURF23xJeWuUrig",
+    "priceId": "price_1JAex8E5koURF23xJeWuUrig",
     "imageUrl": "/images/ice-cream.jpg",
-    "price": 25.15,
+    "price": 2510,
     "title": "Ice Song",
     "description": "Cold and stimulating."
   },
   {
-    "id": "price_1JAezIE5koURF23x3NbOADhB",
+    "priceId": "price_1JAezIE5koURF23x3NbOADhB",
     "imageUrl": "/images/pizza.jpg",
-    "price": 35.75,
+    "price": 3575,
     "title": "Pizza Queen",
     "description": "Deliciously gorgeous."
   }
