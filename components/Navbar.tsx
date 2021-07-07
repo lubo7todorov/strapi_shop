@@ -16,7 +16,7 @@ export default function Navbar() {
           <div className="mr-2">
             <FaCartPlus size="1.5em" />
           </div>
-          <div>{price} USD</div>
+          <div>{price.toFixed(2)} USD</div>
         </button>
       </div>
     </div>
