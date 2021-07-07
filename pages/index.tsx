@@ -35,8 +35,6 @@ export default function Home() {
                       src={product.photo}
                       alt="Random unsplash photo"
                       objectFit="cover"
-                      placeholder="blur"
-                      blurDataURL
                       width={1000}
                       height={750}
                     />
