@@ -22,19 +22,21 @@ export default function Home() {
           </h1>
 
           {/* CARD CONTAINER */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-4 mx-auto gap-1">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 m-8">
             {products &&
               products.map((product) => (
                 <>
                   <div
                     key={product.id}
-                    className="lg:m-4 shadow-md hover:shadow-lg hover:bg-gray-100 rounded-lg bg-white my-12 mx-8 overflow-hidden relative"
+                    className="shadow-md hover:shadow-lg hover:bg-gray-100 rounded-lg bg-white my-12  overflow-hidden relative transform transition duration-500 ease-in-out lg:hover:-translate-y-1.5 hover:scale-105"
                   >
                     {/* CARD IMAGE */}
                     <Image
                       src={product.photo}
                       alt="Random unsplash photo"
                       objectFit="cover"
+                      placeholder="blur"
+                      blurDataURL
                       width={1000}
                       height={750}
                     />
@@ -65,7 +67,9 @@ export default function Home() {
           </div>
           {/* FOOTER */}
           <div className="mt-10 bottom-0 text-center">
-            <h4 className="text-sm font-semibold text-gray-600 ">&copy; 2021</h4>
+            <h4 className="text-sm font-semibold text-gray-600 ">
+              &copy; 2021
+            </h4>
           </div>
         </div>
       </div>
