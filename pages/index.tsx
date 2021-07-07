@@ -25,42 +25,40 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 m-8">
             {products &&
               products.map((product) => (
-                <>
-                  <div
-                    key={product.id}
-                    className="shadow-md hover:shadow-lg hover:bg-gray-100 rounded-lg bg-white my-12  overflow-hidden relative transform transition duration-500 ease-in-out lg:hover:-translate-y-1.5 hover:scale-105"
-                  >
-                    {/* CARD IMAGE */}
-                    <Image
-                      src={product.photo}
-                      alt="Random unsplash photo"
-                      objectFit="cover"
-                      width={1000}
-                      height={750}
-                    />
+                <div
+                  key={product.id}
+                  className="shadow-md hover:shadow-lg hover:bg-gray-100 rounded-lg bg-white my-12  overflow-hidden relative transform transition duration-500 ease-in-out lg:hover:-translate-y-1.5 hover:scale-105"
+                >
+                  {/* CARD IMAGE */}
+                  <Image
+                    src={product.photo}
+                    alt="Random unsplash photo"
+                    objectFit="cover"
+                    width={1000}
+                    height={750}
+                  />
 
-                    {/* CARD CONTENT */}
-                    <div className="p-4">
-                      <h3 className="font-medium text-gray-600 text-lg my-2 uppercase">
-                        {product.title}
-                      </h3>
-                      <p className="absolute right-4 top-2 font-bold text-white text-3xl">
-                        $ {product.price}
-                      </p>
-                      <p className="text-justify capitalize">
-                        {product.description}
-                      </p>
-                      <div className="mt-5">
-                        <button
-                          onClick={() => {}}
-                          className="hover:bg-indigo-700 rounded-full py-2 px-4 font-semibold hover:text-white bg-indigo-500 text-gray-100 shadow-xl"
-                        >
-                          Buy now
-                        </button>
-                      </div>
+                  {/* CARD CONTENT */}
+                  <div className="p-4">
+                    <h3 className="font-medium text-gray-600 text-lg my-2 uppercase">
+                      {product.title}
+                    </h3>
+                    <p className="absolute right-4 top-2 font-bold text-white text-3xl">
+                      $ {product.price}
+                    </p>
+                    <p className="text-justify capitalize">
+                      {product.description}
+                    </p>
+                    <div className="mt-5">
+                      <button
+                        onClick={() => {}}
+                        className="hover:bg-indigo-700 rounded-full py-2 px-4 font-semibold hover:text-white bg-indigo-500 text-gray-100 shadow-xl"
+                      >
+                        Buy now
+                      </button>
                     </div>
                   </div>
-                </>
+                </div>
               ))}
           </div>
           {/* FOOTER */}
