@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Strapi Shop</title>
+        <title>Test Shop</title>
         <meta name="description" content="Test strapi next integration" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
