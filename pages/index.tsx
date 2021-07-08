@@ -7,9 +7,13 @@ import styles from "../styles/Home.module.css";
 import products from "../db/products.json";
 import { initiateCheckout } from "../lib/payments";
 
+type productList = {
+  [key: string]: any;
+};
+
 export default function Home() {
-  const [cart, setCart] = useState({
-    cartProducts: {},
+  const [cart, setCart] = useState<productList>({
+    cartProducts:{}
   });
 
   const [total, setTotal] = useState(0);
@@ -107,8 +111,10 @@ export default function Home() {
             </span>
           </h1>
           <div className="text-center">
-            <div className='font-bold text-2xl'>Items: {numberOfItems}</div> 
-            <div className='font-bold text-2xl'>Total price: {total.toFixed(2)} USD</div> 
+            <div className="font-bold text-2xl">Items: {numberOfItems}</div>
+            <div className="font-bold text-2xl">
+              Total price: {total.toFixed(2)} USD
+            </div>
           </div>
           <div className="text-center">
             <button
