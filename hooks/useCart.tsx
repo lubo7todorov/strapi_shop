@@ -58,6 +58,20 @@ export const CartContextProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const updateProduct = (title: string, quantity:number) => {
+    const foundProduct = cartProducts[title];
+    setCart((prevCart) => ({
+      ...prevCart,
+      cartProducts: {
+        ...prevCart.cartProducts,
+        [title]: {
+          ...foundProduct,
+          quantity,
+        },
+      },
+    }));
+  };
+
   const clearCart = () => {
     setCart(defaultCart);
   };
@@ -140,6 +154,7 @@ export const CartContextProvider = ({ children }: { children: ReactNode }) => {
         updateCart,
         clearCart,
         cartProducts,
+        updateProduct,
         products,
       }}
     >
