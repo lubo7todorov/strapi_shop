@@ -1,100 +1,12 @@
-import { useState, useEffect, useCallback } from "react";
-
 import Head from "next/head";
 import Image from "next/image";
-import styles from "../styles/Home.module.css";
-
-import products from "../db/products.json";
-import { initiateCheckout } from "../lib/payments";
-
-type productList = {
-  [key: string]: any;
-};
+import styles from "@/styles/Home.module.css";
+import { useCartContext } from "@/hooks/useCart";
 
 export default function Home() {
-  const [cart, setCart] = useState<productList>({
-    cartProducts:{}
-  });
+  const { total, numberOfItems, placeOrder, updateCart, products } =
+    useCartContext();
 
-  const [total, setTotal] = useState(0);
-  const [numberOfItems, setNumberOfItems] = useState(0);
-
-  const updateCart = (priceId: string) => {
-    const foundProduct = products.filter(
-      (product) => product.priceId === priceId
-    )[0];
-    const { title } = foundProduct;
-
-    let orderedProducts = Object.keys(cart.cartProducts);
-    if (!orderedProducts.includes(title)) {
-      setCart((prevCart) => ({
-        ...prevCart,
-        cartProducts: {
-          ...prevCart.cartProducts,
-          [title]: { ...foundProduct, quantity: 1 },
-        },
-      }));
-    } else {
-      setCart((prevCart) => ({
-        ...prevCart,
-        cartProducts: {
-          ...prevCart.cartProducts,
-          [title]: {
-            ...foundProduct,
-            quantity: prevCart.cartProducts[title].quantity + 1,
-          },
-        },
-      }));
-    }
-  };
-
-  const getSubtotal = useCallback(() => {
-    const items = Object.keys(cart.cartProducts).map((title: string) => {
-      const product = cart.cartProducts[title];
-
-      return product;
-    });
-
-    let subtotal = items.reduce((acc, item) => {
-      acc = acc + item.quantity * item.price;
-      return acc;
-    }, 0);
-    setTotal(subtotal / 100);
-  }, [cart.cartProducts]);
-
-  const getTotalItems = useCallback(() => {
-    const items = Object.keys(cart.cartProducts).map((title: string) => {
-      const product = cart.cartProducts[title];
-
-      return product;
-    });
-
-    let totalItems = items.reduce((acc, item) => {
-      acc = acc + item.quantity;
-      return acc;
-    }, 0);
-    setNumberOfItems(totalItems);
-  }, [cart.cartProducts]);
-
-  const placeOrder = () => {
-    const lineItems = Object.keys(cart.cartProducts).map((title: string) => {
-      const product = cart.cartProducts[title];
-
-      return {
-        price: product.priceId,
-        quantity: product.quantity,
-      };
-    });
-
-    initiateCheckout({
-      lineItems,
-    });
-  };
-
-  useEffect(() => {
-    getSubtotal();
-    getTotalItems();
-  }, [cart, getSubtotal, getTotalItems]);
   return (
     <>
       <Head>
@@ -127,7 +39,7 @@ export default function Home() {
           {/* CARD CONTAINER */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 m-8">
             {products &&
-              products.map((product) => {
+              products.map((product:any) => {
                 const { priceId, price, imageUrl, description, title } =
                   product;
                 return (
