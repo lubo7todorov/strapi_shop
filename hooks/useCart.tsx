@@ -28,6 +28,7 @@ export const CartContextProvider = ({ children }: { children: ReactNode }) => {
   const [numberOfItems, setNumberOfItems] = useState(0);
   const [cart, setCart] = useState<productList>(defaultCart);
 
+  const { cartProducts } = cart;
   const updateCart = (priceId: string) => {
     const foundProduct = products.filter(
       (product) => product.priceId === priceId
@@ -61,8 +62,8 @@ export const CartContextProvider = ({ children }: { children: ReactNode }) => {
     setCart(defaultCart);
   };
   const getSubtotal = useCallback(() => {
-    const items = Object.keys(cart.cartProducts).map((title: string) => {
-      const product = cart.cartProducts[title];
+    const items = Object.keys(cartProducts).map((title: string) => {
+      const product = cartProducts[title];
 
       return product;
     });
@@ -72,11 +73,11 @@ export const CartContextProvider = ({ children }: { children: ReactNode }) => {
       return acc;
     }, 0);
     setTotal(subtotal / 100);
-  }, [cart.cartProducts]);
+  }, [cartProducts]);
 
   const getTotalItems = useCallback(() => {
-    const items = Object.keys(cart.cartProducts).map((title: string) => {
-      const product = cart.cartProducts[title];
+    const items = Object.keys(cartProducts).map((title: string) => {
+      const product = cartProducts[title];
 
       return product;
     });
@@ -86,7 +87,7 @@ export const CartContextProvider = ({ children }: { children: ReactNode }) => {
       return acc;
     }, 0);
     setNumberOfItems(totalItems);
-  }, [cart.cartProducts]);
+  }, [cartProducts]);
 
   const placeOrder = () => {
     const lineItems = Object.keys(cart.cartProducts).map((title: string) => {
@@ -138,6 +139,7 @@ export const CartContextProvider = ({ children }: { children: ReactNode }) => {
         placeOrder,
         updateCart,
         clearCart,
+        cartProducts,
         products,
       }}
     >
