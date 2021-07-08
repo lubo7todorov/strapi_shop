@@ -8,6 +8,7 @@ import {
 } from "react";
 import { initiateCheckout } from "@/lib/payments";
 import products from "@/db/products.json";
+import { setStorageItem, getStorageItem } from "@/lib/storage";
 
 type productList = {
   [key: string]: any;
@@ -102,25 +103,31 @@ export const CartContextProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
+  // * CALCULATE SUBTOTAL AND NUMBER OF ORDERED ITEMS
   useEffect(() => {
     getSubtotal();
     getTotalItems();
   }, [cart, getSubtotal, getTotalItems]);
 
+  // * LOAD CART FROM LOCAL STORAGE
   useEffect(() => {
-    const cartFromLocalStorage = JSON.parse(
-      window.localStorage.getItem("cart") || "{}"
-    );
+    /* const cartFromStorage = window.localStorage.getItem("cart");
 
-    if (cartFromLocalStorage) {
-      setCart(cartFromLocalStorage);
+    if (cartFromStorage) {
+      setCart(JSON.parse(cartFromStorage));
+    }
+ */
+    const data = getStorageItem("CART");
+    if (data) {
+      setCart(data);
     }
   }, []);
 
+  // * PERSIST CART TO LOCAL STORAGE
   useEffect(() => {
     if (typeof window === "undefined") return;
-    window.localStorage.setItem("cart", JSON.stringify(cart));
-    localStorage.setItem("myCat", "Tom");
+    /* window.localStorage.setItem("cart", JSON.stringify(cart)); */
+    setStorageItem("CART", cart);
   }, [cart]);
 
   return (
