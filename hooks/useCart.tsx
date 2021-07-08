@@ -19,12 +19,13 @@ export const useCartContext = () => {
   return useContext(CartContext);
 };
 
+const defaultCart = {
+  cartProducts: {},
+};
 export const CartContextProvider = ({ children }: { children: ReactNode }) => {
   const [total, setTotal] = useState(0);
   const [numberOfItems, setNumberOfItems] = useState(0);
-  const [cart, setCart] = useState<productList>({
-    cartProducts: {},
-  });
+  const [cart, setCart] = useState<productList>(defaultCart);
 
   const updateCart = (priceId: string) => {
     const foundProduct = products.filter(
@@ -55,6 +56,9 @@ export const CartContextProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const clearCart = () => {
+    setCart(defaultCart);
+  };
   const getSubtotal = useCallback(() => {
     const items = Object.keys(cart.cartProducts).map((title: string) => {
       const product = cart.cartProducts[title];
@@ -103,6 +107,22 @@ export const CartContextProvider = ({ children }: { children: ReactNode }) => {
     getTotalItems();
   }, [cart, getSubtotal, getTotalItems]);
 
+  useEffect(() => {
+    const cartFromLocalStorage = JSON.parse(
+      window.localStorage.getItem("cart") || "{}"
+    );
+
+    if (cartFromLocalStorage) {
+      setCart(cartFromLocalStorage);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    window.localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem("myCat", "Tom");
+  }, [cart]);
+
   return (
     <CartContext.Provider
       value={{
@@ -110,6 +130,7 @@ export const CartContextProvider = ({ children }: { children: ReactNode }) => {
         total,
         placeOrder,
         updateCart,
+        clearCart,
         products,
       }}
     >

@@ -4,7 +4,7 @@ import styles from "@/styles/Home.module.css";
 import { useCartContext } from "@/hooks/useCart";
 
 export default function Home() {
-  const { total, numberOfItems, placeOrder, updateCart, products } =
+  const { total, numberOfItems, placeOrder, updateCart,clearCart, products } =
     useCartContext();
 
   return (
@@ -28,12 +28,18 @@ export default function Home() {
               Total price: {total.toFixed(2)} USD
             </div>
           </div>
-          <div className="text-center">
+          <div className="text-center ">
             <button
-              className=" mt-8 hover:bg-indigo-700 rounded-full py-2 px-4 font-semibold hover:text-white bg-indigo-500 text-gray-100 shadow-xl"
+              className=" mt-8 hover:bg-indigo-700 rounded-full py-2 px-4 font-semibold hover:text-white bg-indigo-500 text-gray-100 shadow-xl mr-4"
               onClick={placeOrder}
             >
               Order Now
+            </button>
+            <button
+              className=" mt-8 hover:bg-indigo-700 rounded-full py-2 px-4 font-semibold hover:text-white bg-indigo-500 text-gray-100 shadow-xl"
+              onClick={clearCart}
+            >
+              Clear orders
             </button>
           </div>
           {/* CARD CONTAINER */}
