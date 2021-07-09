@@ -10,7 +10,7 @@ export default function Navbar() {
       <div className="p-4 flex justify-between mx-4 ">
         <div className='space-x-4'>
           <Link href="/">logo</Link>
-          <Link href="/cart/table">table</Link>
+          <Link href="/table">table</Link>
         </div>
         <Link href="/cart" passHref>
           <div className="flex p-4 cursor-pointer">

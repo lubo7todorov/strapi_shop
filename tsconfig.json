@@ -23,6 +23,6 @@
       "@/db/*": ["db/*"],
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "lib/storage.js", "pages/cart/table.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "lib/storage.js", "pages/table/index.jsx"],
   "exclude": ["node_modules"]
 }
