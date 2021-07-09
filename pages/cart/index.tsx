@@ -1,3 +1,5 @@
+import React, { useState, useEffect } from 'react';
+import { useTable } from 'react-table';
 import { useCartContext } from "@/hooks/useCart";
 import { ChangeEvent } from "react";
 
