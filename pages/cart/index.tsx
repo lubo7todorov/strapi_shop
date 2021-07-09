@@ -52,7 +52,7 @@ function CartPage() {
                 className=" mt-8 hover:bg-indigo-700 rounded-full py-2 px-4 w-36 font-semibold hover:text-white bg-indigo-500 text-gray-100 shadow-xl mr-4"
                 onClick={placeOrder}
               >
-                Choose again
+                Order again
               </button>
             </Link>
           )}
